@@ -1,5 +1,22 @@
 console.log("Before");
 
+// Promise based approach
+// getUser(1)
+//   .then((user) => getRepo(user.username))
+//   .then((repos) => console.log(repos))
+//   .catch((err) => console.log("Error: ", err.message));
+
+// Async and Await based approach
+async function asyncAwaitfn() {
+  const user = await getUser(1);
+  const repos = await getRepo(user.username);
+  console.log(repos);
+}
+
+asyncAwaitfn();
+
+console.log("After");
+
 function getUser(id) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -15,11 +32,3 @@ function getRepo(username) {
     }, 2000);
   });
 }
-
-// Consuming Promises
-getUser(1)
-  .then((user) => getRepo(user.username))
-  .then((repos) => console.log(repos))
-  .catch((err) => console.log("Error: ", err.message));
-
-console.log("After");
