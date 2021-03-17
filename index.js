@@ -1,25 +1,25 @@
 console.log("Before");
-getUser(1, workWithUser);
+
+function getUser(id) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve({ id: id, username: "Mosh" });
+    }, 2000);
+  });
+}
+
+function getRepo(username) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(["repo1", "repo2", "repo3"]);
+    }, 2000);
+  });
+}
+
+// Consuming Promises
+getUser(1)
+  .then((user) => getRepo(user.username))
+  .then((repos) => console.log(repos))
+  .catch((err) => console.log("Error: ", err.message));
+
 console.log("After");
-
-function workWithUser(user) {
-  getRepo(user.username, displayRepos);
-}
-
-function displayRepos(repos) {
-  console.log(repos);
-}
-
-function getUser(id, callback) {
-  setTimeout(() => {
-    console.log("Reading user from database...");
-    callback({ id: 1, username: "Mosh" });
-  }, 2000);
-}
-
-function getRepo(username, callback) {
-  setTimeout(() => {
-    console.log("Calling GitHub API...");
-    callback(["repo1", "repo2", "repo3"]);
-  }, 2000);
-}
